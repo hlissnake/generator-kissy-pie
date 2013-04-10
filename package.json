@@ -2,7 +2,7 @@
   "name": "generator-kissy-pie",
   "version": "0.0.0",
   "description": "kissy generator for kissypie",
-  "main": "lib/index.js",
+  "main": "app/index.js",
   "scripts": {
     "test": "mocha"
   },
