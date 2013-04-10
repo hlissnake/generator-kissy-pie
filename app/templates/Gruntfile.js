@@ -9,12 +9,12 @@ module.exports = function(grunt) {
     pageName: grunt.option('page') || 'home',
     version: grunt.option('ver') || '1.0',
     timestamp: grunt.option('ts') || '20121212',
-    pageBase: '<%%= pageName %%>/<%%= version %%>/page',
-    pageBuildBase: '<%%= pageName %%>/<%%= timestamp %%>/page',
+    pageBase: '<%%= pageName %>/<%%= version %>/page',
+    pageBuildBase: '<%%= pageName %>/<%%= timestamp %>/page',
 
     clean: {
       page: {
-        src: '<%%= pageName %%>/<%%=timestamp %%>/'
+        src: '<%%= pageName %>/<%%=timestamp %>/'
       },
       common: {
         src: 'common/*-min.*'
@@ -26,12 +26,12 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: '<%%= pageBase %%>',
+            cwd: '<%%= pageBase %>',
             src: ['*.js', '*.css'],
-            dest: '<%%= pageBuildBase %%>',
+            dest: '<%%= pageBuildBase %>',
           }
         ]
-      },
+      }
     },
 
     less: {
@@ -42,9 +42,9 @@ module.exports = function(grunt) {
       page: {
         files: [{
           expand: true,
-          cwd: '<%%= pageBase %%>',
+          cwd: '<%%= pageBase %>',
           src: '*.less',
-          dest: '<%%= pageBuildBase %%>',
+          dest: '<%%= pageBuildBase %>',
           ext: '.css'
         }]
       }
@@ -52,15 +52,15 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        banner: '/*! <%%= pkg.name %%> <%%= grunt.template.today("yyyy-mm-dd") %%> */\n'
+        banner: '/*! <%%= pkg.name %> <%%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       page: {
         files: [
           {
             expand: true,
-            cwd: '<%%= pageName%%>/<%%= version%%>/page',
+            cwd: '<%%= pageName%>/<%%= version%>/page',
             src: '*.js',
-            dest: '<%%= pageName%%>/<%%=timestamp%%>/page/',
+            dest: '<%%= pageName%>/<%%=timestamp%>/page/',
             ext: '-min.js'
           }
         ]
@@ -80,9 +80,9 @@ module.exports = function(grunt) {
       page: {
         files: [{
           expand: true,
-          cwd: '<%%= pageBuildBase %%>',
+          cwd: '<%%= pageBuildBase %>',
           src: ['*.css','!*-min.css'],
-          dest: '<%%= pageBuildBase %%>',
+          dest: '<%%= pageBuildBase %>',
           ext: '-min.css'
         }]
       }
