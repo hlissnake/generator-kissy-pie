@@ -1,0 +1,18 @@
+{
+  "name": "generator-kissy-pie",
+  "version": "0.0.0",
+  "description": "kissy generator for kissypie",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "maxbbn",
+  "license": "BSD",
+  "dependencies": {
+    "yeoman-generator": "~0.10.3"
+  }
+}
