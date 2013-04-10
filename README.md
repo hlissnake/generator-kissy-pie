@@ -11,7 +11,7 @@ npm install yo
 第一步:
 
 ````sh
-git clone git@gitlab.alibaba-inc.com:abc/generator-kissy-pie.git
+git clone git@github.com:maxbbn/generator-kissy-pie.git
 cd generator-kissy-pie
 npm link
 ````
