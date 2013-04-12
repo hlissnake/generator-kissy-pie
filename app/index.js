@@ -31,7 +31,6 @@ util.inherits(AppGenerator, yeoman.generators.NamedBase);
 
 AppGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
-
     // welcome message
     var welcome =
           " _   ___                "+   "______ _      ".yellow +
@@ -45,7 +44,7 @@ AppGenerator.prototype.askFor = function askFor() {
 
 
     console.log(welcome);
-    console.log('Out of the box I include HTML5 Boilerplate, jQuery and Modernizr.');
+    // console.log('Out of the box I include HTML5 Boilerplate, jQuery and Modernizr.');
 
     var prompts = [{
         name: 'compassBootstrap',
