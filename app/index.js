@@ -8,16 +8,12 @@ module.exports = AppGenerator;
 
 function AppGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
-
-    // resolved to mocha by default (could be switched to jasmine for instance)
-    this.hookFor('test-framework', { as: 'app' });
-
+    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
     this.on('end', function () {
 //        console.log('\nI\'m all done. Just run ' + 'npm install'.bold.yellow + ' to install the required dependencies.');
-
         this.prompt([{
             name: 'initPage',
-            message: 'Do you want to init a page right now?',
+            message: 'Do you add a page right now?',
             default: 'Y/n',
             warning: ''
         }], function (err, props) {
@@ -35,8 +31,6 @@ function AppGenerator(args, options, config) {
         }.bind(this));
 
     }.bind(this));
-
-    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 }
 
 util.inherits(AppGenerator, yeoman.generators.NamedBase);
@@ -46,12 +40,12 @@ AppGenerator.prototype.askFor = function askFor() {
 
     // welcome message
     var welcome =
-          " _   ___                "+   "______ _      ".yellow +
-        "\n| | / (_)               "+   "| ___ (_)     ".yellow +
-        "\n| |/ / _ ___ ___ _   _  "+   "| |_/ /_  ___ ".yellow +
-        "\n|    \\| / __/ __| | | | "+  "|  __/| |/ _ \\".yellow +
-        "\n| |\\  \\ \\__ \\__ \\ |_| | "+"| |   | |  __/".yellow +
-        "\n\\_| \\_/_|___/___/\\__, | "+"\\_|   |_|\\___|".yellow +
+          " _   ___                "+   "______ _      ".cyan +
+        "\n| | / (_)               "+   "| ___ (_)     ".cyan +
+        "\n| |/ / _ ___ ___ _   _  "+   "| |_/ /_  ___ ".cyan +
+        "\n|    \\| / __/ __| | | | "+  "|  __/| |/ _ \\".cyan +
+        "\n| |\\  \\ \\__ \\__ \\ |_| | "+"| |   | |  __/".cyan +
+        "\n\\_| \\_/_|___/___/\\__, | "+"\\_|   |_|\\___|".cyan +
         "\n                  __/ |               "+
         "\n                 |___/                ";
 
@@ -112,7 +106,6 @@ AppGenerator.prototype.askFor = function askFor() {
         this.enableCSSCombo = (/css-combo/i).test(this.styleEngine);
 
         cb();
-
     }.bind(this));
 };
 
@@ -145,14 +138,7 @@ AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
     this.mkdir('tools');
     this.mkdir('common');
-
-
-
     this.template('abc.json');
-    this.copy('app-update.bat', 'tools/app-update.bat');
-    this.copy('app-update.sh', 'tools/app-update.sh');
-    this.template('ki-ui.sh', 'tools/ki-ui.sh');
-    this.template('ki-ui.bat', 'tools/ki-ui.bat');
     this.template('package-config.js', 'common/package-config.js');
 };
 
