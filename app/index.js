@@ -10,8 +10,7 @@ function AppGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
 
     // resolved to mocha by default (could be switched to jasmine for instance)
-
-
+    this.hookFor('test-framework', { as: 'app' });
 
     this.on('end', function () {
 //        console.log('\nI\'m all done. Just run ' + 'npm install'.bold.yellow + ' to install the required dependencies.');
@@ -98,7 +97,6 @@ AppGenerator.prototype.askFor = function askFor() {
     }];
 
     this.prompt(prompts, function (err, props) {
-
         if (err) {
             return this.emit('error', err);
         }
