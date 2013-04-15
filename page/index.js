@@ -20,32 +20,51 @@ function PageGenerator(args, options, config) {
 util.inherits(PageGenerator, yeoman.generators.NamedBase);
 
 PageGenerator.prototype.askFor = function askFor(pagePath) {
-    var welcome =
-        '\n     _-----_' +
-            '\n    |       |' +
-            '\n    |'+'--(o)--'.red+'|   .--------------------------.' +
-            '\n   `---------´  |    '+'Welcome to Yeoman,'.yellow.bold+'    |' +
-            '\n    '+'( '.yellow+'_'+'´U`'.yellow+'_'+' )'.yellow+'   |   '+'ladies and gentlemen!'.yellow.bold+'  |' +
-            '\n    /___A___\\   \'__________________________\'' +
-            '\n     |  ~  |'.yellow +
-            '\n   __'+'\'.___.\''.yellow+'__' +
-            '\n ´   '+'`  |'.red+'° '+'´ Y'.red+' `\n';
+    var welcome = "\n    *------*" +
+        "\n    | Page |" +
+        "\n    *------*" +
+        "\n"
+    console.log(welcome.green);
 
-    console.log(welcome);
-    console.log('Generating Page. %s', pagePath);
 
-    this.pagePath = pagePath;
 
+    if (!pagePath) {
+        var cb = this.async();
+        this.prompt([{
+            name: 'pageName',
+            message: 'Name of you Page?'
+        }, {
+            name: 'pageVersion',
+            message: 'version of the page?'
+        }], function (err, props) {
+
+            if (err) {
+                return this.emit('error', err);
+            }
+
+            // manually deal with the response, get back and store the results.
+            // we change a bit this way of doing to automatically do this in the self.prompt() method.
+            this.pageName = props.pageName;
+            this.pagePath = path.join(props.pageName, props.pageVersion);
+
+            cb();
+
+        }.bind(this));
+    } else {
+        this.pagePath = pagePath;
+    }
 };
 
 
-PageGenerator.prototype.page = function app(pageName) {
+PageGenerator.prototype.page = function app() {
+    console.log('Generating Page. %s', this.pagePath);
     var pagePath = this.pagePath;
     this.mkdir(path.join(pagePath, 'test'));
     this.mkdir(path.join(pagePath, 'page', 'mods'));
     this.template('fb-build.bat', path.join(pagePath, 'fb-build.bat'));
     this.template('fb-build.sh', path.join(pagePath, 'fb-build.sh'));
     this.template('fb.page.json', path.join(pagePath, 'fb.page.json'));
+    //TODO choose based on styleEngine
     this.template('index.less', path.join(pagePath, 'page', 'index.less'));
-    this.template('init.js', path.join(pagePath, 'page', pageName + '.js'));
+    this.template('init.js', path.join(pagePath, 'page', 'init.js'));
 };

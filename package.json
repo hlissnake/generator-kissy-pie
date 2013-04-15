@@ -13,6 +13,6 @@
   "author": "maxbbn",
   "license": "BSD",
   "dependencies": {
-    "yeoman-generator": "~0.10.3"
+    "yeoman-generator": "~0.10.4"
   }
 }

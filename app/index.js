@@ -9,20 +9,33 @@ module.exports = AppGenerator;
 function AppGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
 
-    // setup the test-framework property, Gruntfile template will need this
-    this.testFramework = options['test-framework'] || 'mocha';
-
-    // for hooks to resolve on mocha by default
-    if (!options['test-framework']) {
-        options['test-framework'] = 'mocha';
-    }
-
     // resolved to mocha by default (could be switched to jasmine for instance)
-    this.hookFor('test-framework', { as: 'app' });
+
+
 
     this.on('end', function () {
-        console.log('\nI\'m all done. Just run ' + 'npm install'.bold.yellow + ' to install the required dependencies.');
-    });
+//        console.log('\nI\'m all done. Just run ' + 'npm install'.bold.yellow + ' to install the required dependencies.');
+
+        this.prompt([{
+            name: 'initPage',
+            message: 'Do you want to init a page right now?',
+            default: 'Y/n',
+            warning: ''
+        }], function (err, props) {
+
+            if (err) {
+                return this.emit('error', err);
+            }
+
+            this.initPage = (/y/i).test(props.initPage);
+
+            if (this.initPage) {
+                this.invoke('kissy-pie:page')
+            }
+
+        }.bind(this));
+
+    }.bind(this));
 
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 }
@@ -41,29 +54,67 @@ AppGenerator.prototype.askFor = function askFor() {
         "\n| |\\  \\ \\__ \\__ \\ |_| | "+"| |   | |  __/".yellow +
         "\n\\_| \\_/_|___/___/\\__, | "+"\\_|   |_|\\___|".yellow +
         "\n                  __/ |               "+
-        "\n                 |___/                "
+        "\n                 |___/                ";
 
 
     console.log(welcome);
-    console.log('Out of the box I include HTML5 Boilerplate, jQuery and Modernizr.');
+
+    var abcJSON = {};
+    try {
+         abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
+    } catch (e) {}
+    if (!abcJSON.author) {
+        abcJSON.author = {
+            name: '',
+            email: ''
+        }
+    }
+    if (!abcJSON._kissy_pie) {
+        abcJSON._kissy_pie = {
+            styleEngine: ''
+        }
+    }
 
     var prompts = [{
-        name: 'compassBootstrap',
-        message: 'Would you like to include Twitter Bootstrap for Sass?',
-        default: 'Y/n',
+        name: 'projectName',
+        message: 'Name of Project?',
+        default: path.basename(process.cwd()),
+        warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+    },{
+        name: 'author',
+        message: 'Author Name:',
+        default: abcJSON.author.name,
+        warning: ''
+    },{
+        name: 'email',
+        message: 'Author Email:',
+        default: abcJSON.author.email,
+        warning: ''
+    },{
+        name: 'styleEngine',
+        message: 'Whitch style engin do you use [css-combo|less|sass]?',
+        default: abcJSON._kissy_pie.styleEngine,
         warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
     }];
 
     this.prompt(prompts, function (err, props) {
+
         if (err) {
             return this.emit('error', err);
         }
 
         // manually deal with the response, get back and store the results.
         // we change a bit this way of doing to automatically do this in the self.prompt() method.
-        this.compassBootstrap = (/y/i).test(props.compassBootstrap);
+        this.projectName = props.projectName;
+        this.author = props.author;
+        this.email = props.email;
+        this.styleEngine = props.styleEngine;
+        this.enableLess = (/less/i).test(this.styleEngine);
+        this.enableSass = (/sass/i).test(this.styleEngine);
+        this.enableCSSCombo = (/css-combo/i).test(this.styleEngine);
 
         cb();
+
     }.bind(this));
 };
 
@@ -89,22 +140,25 @@ AppGenerator.prototype.editorConfig = function editorConfig() {
 };
 
 AppGenerator.prototype.mainStylesheet = function mainStylesheet() {
-    return;
-    if (this.compassBootstrap) {
-        this.write('app/styles/main.scss', '$iconSpritePath: "../images/glyphicons-halflings.png";\n$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";\n\n@import \'sass-bootstrap/lib/bootstrap\';\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
-    } else {
-        this.write('app/styles/main.css', 'body {\n    background: #fafafa;\n}\n\n.hero-unit {\n    margin: 50px auto 0 auto;\n    width: 300px;\n}');
-    }
+
 };
 
 AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
     this.mkdir('tools');
     this.mkdir('common');
-    this.template('package-config.js', 'common/package-config.js');
-    this.template('fb.json');
-    this.template('app-update.bat', 'tools/app-update.bat');
-    this.template('app-update.sh', 'tools/app-update.sh');
+
+
+
+    this.template('abc.json');
+    this.copy('app-update.bat', 'tools/app-update.bat');
+    this.copy('app-update.sh', 'tools/app-update.sh');
     this.template('ki-ui.sh', 'tools/ki-ui.sh');
     this.template('ki-ui.bat', 'tools/ki-ui.bat');
+    this.template('package-config.js', 'common/package-config.js');
+};
+
+AppGenerator.prototype.install = function install() {
+    var cb = this.async();
+    this.npmInstall('', {}, cb);
 };
