@@ -23,7 +23,7 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
     var welcome = "\n    *------*" +
         "\n    | Page |" +
         "\n    *------*" +
-        "\n"
+        "\n";
     console.log(welcome.green);
 
 

@@ -13,14 +13,16 @@ function AppGenerator(args, options, config) {
     this.hookFor('test-framework', { as: 'app' });
 
     this.on('end', function () {
-//        console.log('\nI\'m all done. Just run ' + 'npm install'.bold.yellow + ' to install the required dependencies.');
+        console.log('\nI\'m all done. ');
 
-        this.prompt([{
-            name: 'initPage',
-            message: 'Do you want to init a page right now?',
-            default: 'Y/n',
-            warning: ''
-        }], function (err, props) {
+        this.prompt([
+            {
+                name: 'initPage',
+                message: 'Do you want to init a page right now?',
+                default: 'Y/n',
+                warning: ''
+            }
+        ], function (err, props) {
 
             if (err) {
                 return this.emit('error', err);
@@ -46,22 +48,23 @@ AppGenerator.prototype.askFor = function askFor() {
 
     // welcome message
     var welcome =
-          " _   ___                "+   "______ _      ".yellow +
-        "\n| | / (_)               "+   "| ___ (_)     ".yellow +
-        "\n| |/ / _ ___ ___ _   _  "+   "| |_/ /_  ___ ".yellow +
-        "\n|    \\| / __/ __| | | | "+  "|  __/| |/ _ \\".yellow +
-        "\n| |\\  \\ \\__ \\__ \\ |_| | "+"| |   | |  __/".yellow +
-        "\n\\_| \\_/_|___/___/\\__, | "+"\\_|   |_|\\___|".yellow +
-        "\n                  __/ |               "+
-        "\n                 |___/                ";
+        " _   ___                " + "______ _      ".yellow +
+            "\n| | / (_)               " + "| ___ (_)     ".yellow +
+            "\n| |/ / _ ___ ___ _   _  " + "| |_/ /_  ___ ".yellow +
+            "\n|    \\| / __/ __| | | | " + "|  __/| |/ _ \\".yellow +
+            "\n| |\\  \\ \\__ \\__ \\ |_| | " + "| |   | |  __/".yellow +
+            "\n\\_| \\_/_|___/___/\\__, | " + "\\_|   |_|\\___|".yellow +
+            "\n                  __/ |               " +
+            "\n                 |___/                ";
 
 
     console.log(welcome);
 
     var abcJSON = {};
     try {
-         abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
-    } catch (e) {}
+        abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
+    } catch (e) {
+    }
     if (!abcJSON.author) {
         abcJSON.author = {
             name: '',
@@ -74,27 +77,32 @@ AppGenerator.prototype.askFor = function askFor() {
         }
     }
 
-    var prompts = [{
-        name: 'projectName',
-        message: 'Name of Project?',
-        default: path.basename(process.cwd()),
-        warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
-    },{
-        name: 'author',
-        message: 'Author Name:',
-        default: abcJSON.author.name,
-        warning: ''
-    },{
-        name: 'email',
-        message: 'Author Email:',
-        default: abcJSON.author.email,
-        warning: ''
-    },{
-        name: 'styleEngine',
-        message: 'Whitch style engin do you use [css-combo|less|sass]?',
-        default: abcJSON._kissy_pie.styleEngine,
-        warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
-    }];
+    var prompts = [
+        {
+            name: 'projectName',
+            message: 'Name of Project?',
+            default: path.basename(process.cwd()),
+            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+        },
+        {
+            name: 'author',
+            message: 'Author Name:',
+            default: abcJSON.author.name,
+            warning: ''
+        },
+        {
+            name: 'email',
+            message: 'Author Email:',
+            default: abcJSON.author.email,
+            warning: ''
+        },
+        {
+            name: 'styleEngine',
+            message: 'Whitch style engin do you use [css-combo|less|sass]?',
+            default: abcJSON._kissy_pie.styleEngine,
+            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+        }
+    ];
 
     this.prompt(prompts, function (err, props) {
         if (err) {
@@ -147,16 +155,23 @@ AppGenerator.prototype.app = function app() {
     this.mkdir('common');
 
 
-
     this.template('abc.json');
     this.copy('app-update.bat', 'tools/app-update.bat');
     this.copy('app-update.sh', 'tools/app-update.sh');
-    this.template('ki-ui.sh', 'tools/ki-ui.sh');
-    this.template('ki-ui.bat', 'tools/ki-ui.bat');
+
     this.template('package-config.js', 'common/package-config.js');
 };
 
 AppGenerator.prototype.install = function install() {
     var cb = this.async();
-    this.npmInstall('', {}, cb);
+    this.npmInstall('', {}, function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        console.log('\n\nnpm was installed successful. \n\n');
+
+    });
 };
