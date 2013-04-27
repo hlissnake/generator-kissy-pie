@@ -135,17 +135,11 @@ AppGenerator.prototype.editorConfig = function editorConfig() {
     this.copy('editorconfig', '.editorconfig');
 };
 
-AppGenerator.prototype.mainStylesheet = function mainStylesheet() {
-
-};
-
 AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
     this.mkdir('tools');
     this.mkdir('common');
     this.template('abc.json');
-    this.copy('app-update.bat', 'tools/app-update.bat');
-    this.copy('app-update.sh', 'tools/app-update.sh');
     this.template('package-config.js', 'common/package-config.js');
 };
 
