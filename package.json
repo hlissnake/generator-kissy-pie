@@ -10,7 +10,7 @@
   "keywords": [
     "yeoman-generator"
   ],
-  "author": "maxbbn",
+  "author": "maxbbn <qipbbn@gmail.com>",
   "license": "BSD",
   "dependencies": {
     "yeoman-generator": "~0.10.4"
