@@ -24,7 +24,8 @@
         "grunt-contrib-cssmin": "~0.5.0",
         "grunt-contrib-watch": "~0.3.1",
         "grunt-kmc": "~0.1.0",
-        "grunt-kissy-template": "~0.1.0"
+        "grunt-kissy-template": "~0.1.0",
+        "abc-gruntfile-helper": "~0.0.1"
     },
 
     "dependencies": {

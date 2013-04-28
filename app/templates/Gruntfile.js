@@ -149,7 +149,39 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        },
+        },<% if(enableCSSCombo) { %>
+        /**
+         * CSS-Combo
+         */
+        'css-combo': {
+            options: {
+                paths: ['.', '<%%= pageBase %>']
+            },
+
+            page: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%%= pageBase %>',
+                        src: '*.less',
+                        dest: '<%%= pageBuildBase %>',
+                        ext: '.css'
+                    }
+                ]
+            },
+
+            common: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%%= commonBase %>',
+                        src: '*.less',
+                        dest: '<%%= commonBase %>',
+                        ext: '.css'
+                    }
+                ]
+            }
+        },<% } %><% if(enableLess) { %>
 
         /**
          * 将LESS编译为CSS
@@ -183,7 +215,7 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        },
+        },<% } %><% if(enableSass) { %>
 
         /**
          * 编译Compass & SASS
@@ -212,7 +244,7 @@ module.exports = function (grunt) {
                     imagesDir: '<%%= commonBase %>/images'
                 }
             }
-        },
+        },<% } %>
 
         /**
          * 对JS文件进行压缩
@@ -315,10 +347,10 @@ module.exports = function (grunt) {
      */
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-css-combo');
-    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-uglify');<% if(enableCSSCombo) { %>
+    grunt.loadNpmTasks('grunt-css-combo');<% } %> <% if(enableLess) { %>
+    grunt.loadNpmTasks('grunt-contrib-less');<% } %> <% if(enableSass) { %>
+    grunt.loadNpmTasks('grunt-contrib-compass');<% } %>
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-kissy-template');
@@ -331,9 +363,9 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'page' ]);
 
     // 对单个页面进行打包
-    grunt.registerTask('page', ['clean:page', 'ktpl:page','kmc:page', 'uglify:page', 'less:page', 'compass:page',  'cssmin:page']);
+    grunt.registerTask('page', ['clean:page', 'ktpl:page','kmc:page', 'uglify:page', <% if(enableCSSCombo) { %> 'css-combo:page',<% } %> <% if(enableLess) { %> 'less:page', <% } %> <% if(enableSass) { %>'compass:page',<% } %> 'cssmin:page']);
     // 对common进行打包
-    grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common', 'less:common', 'compass:common', 'cssmin:common']);
+    grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common', <% if(enableCSSCombo) { %> 'css-combo:page',<% } %><% if(enableLess) { %> 'less:common', <% } %> <% if(enableSass) { %>'compass:common',<% } %>  'cssmin:common']);
     
     grunt.registerTask('debug', ['page', 'debug-xxx']);
 
