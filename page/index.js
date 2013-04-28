@@ -64,7 +64,6 @@ PageGenerator.prototype.page = function app() {
     this.template('fb-build.bat', path.join(pagePath, 'fb-build.bat'));
     this.template('fb-build.sh', path.join(pagePath, 'fb-build.sh'));
     this.template('fb.page.json', path.join(pagePath, 'fb.page.json'));
-    //TODO choose based on styleEngine
     this.template('index.less', path.join(pagePath, 'page', 'index.less'));
     this.template('init.js', path.join(pagePath, 'page', 'init.js'));
 };
