@@ -1,4 +1,4 @@
-a yeoman generator for kissy pie
+A yeoman generator for kissy pie
 
 ## install
 ### 安装yeoman
@@ -10,13 +10,13 @@ npm install yo -g
 
 第一步:
 
-````sh
+```sh
 $ npm link
-````
+```
 
 第二步, 在你的应用目录内:
 
-````sh
+```sh
 $ mkdir my-app && cd myapp
 $ yo kissy-pie #执行yeoman
-````
+```
