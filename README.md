@@ -51,3 +51,5 @@ $ yo kissy-pie #执行yeoman
         buildPages: [ 'index/1.0']
     };
 ```
+
+之后则可以直接使用 `grunt` 或者 `grunt page`进行打包，使用`grunt watch`进行文件监控。 
