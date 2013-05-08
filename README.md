@@ -53,3 +53,16 @@ $ yo kissy-pie #执行yeoman
 ```
 
 之后则可以直接使用 `grunt` 或者 `grunt page`进行打包，使用`grunt watch`进行文件监控。 
+
+## 命令行
+
+使用命令行将覆盖`Gruntfile.js`中对于build目标的配置，具体使用如下：
+
+```
+单个页面：
+     *          打包：     `grunt page --target home/1.0 --ts 20130412`
+     *          watch：    `grunt watch --target home/1.0 --ts 20130412`      
+多个页面：
+     *          打包：     `grunt page --target home/1.0,intro/2.0 --ts 20130506`
+     *          watch:    `grunt watch --target home/1.0,intro/2.0 --ts 20130506`
+```
