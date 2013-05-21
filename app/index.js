@@ -1,13 +1,17 @@
 'use strict';
 var util = require('util');
 var path = require('path');
-var yeoman = require('yeoman-generator');
+var Base = require('abc-generator').UIBase;
 
 
 module.exports = AppGenerator;
 
 function AppGenerator(args, options, config) {
-    yeoman.generators.Base.apply(this, arguments);
+    Base.apply(this, arguments);
+    
+    this.email = Math.random();
+    this.author = Math.random();
+
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 
     this.on('end', function () {
@@ -33,7 +37,7 @@ function AppGenerator(args, options, config) {
     }.bind(this));
 }
 
-util.inherits(AppGenerator, yeoman.generators.NamedBase);
+util.inherits(AppGenerator, Base);
 
 AppGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
@@ -49,7 +53,7 @@ AppGenerator.prototype.askFor = function askFor() {
         "\n                  __/ |               "+
         "\n                 |___/                ";
 
-    console.log(welcome);
+    this.log.writeln(welcome);
 
     var abcJSON = {};
     try {
@@ -146,6 +150,7 @@ AppGenerator.prototype.app = function app() {
 
 AppGenerator.prototype.install = function install() {
     var cb = this.async();
+    var self = this;
     this.npmInstall('', {}, function (err) {
 
         if (err) {
@@ -153,7 +158,7 @@ AppGenerator.prototype.install = function install() {
             return;
         }
 
-        console.log('\n\nnpm was installed successful. \n\n');
+        self.log.writeln('\n\nnpm was installed successful. \n\n');
 
     });
 };

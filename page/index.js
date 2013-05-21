@@ -1,7 +1,7 @@
 'use strict';
 var util = require('util');
 var path = require('path');
-var yeoman = require('yeoman-generator');
+var Base = require('abc-generator').UIBase;
 
 
 module.exports = PageGenerator;
@@ -17,16 +17,13 @@ function PageGenerator(args, options, config) {
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 }
 
-util.inherits(PageGenerator, yeoman.generators.NamedBase);
+util.inherits(PageGenerator, Base);
 
 PageGenerator.prototype.askFor = function askFor(pagePath) {
-    var welcome = "\n    *------*" +
-        "\n    | Page |" +
-        "\n    *------*" +
-        "\n";
-    console.log(welcome.green);
 
+    var welcome = this.abcLogo;
 
+    this.log(welcome, 'kissy-pie:page');
 
     if (!pagePath) {
         var cb = this.async();
