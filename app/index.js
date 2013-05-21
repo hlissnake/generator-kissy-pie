@@ -143,7 +143,7 @@ AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
     this.mkdir('tools');
     this.mkdir('common');
-    this.copy('README.md');
+    this.copy('README.md', 'README.md');
     this.template('abc.json');
     this.template('package-config.js', 'common/package-config.js');
 };
