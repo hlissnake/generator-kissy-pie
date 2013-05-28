@@ -8,7 +8,7 @@ module.exports = PageGenerator;
 
 function PageGenerator(args, options, config) {
     var self = this;
-    yeoman.generators.Base.apply(this, arguments);
+    Base.apply(this, arguments);
 
     this.on('end', function () {
         console.log('\nSuccess Generated Page:%s', self.pagePath.green);
