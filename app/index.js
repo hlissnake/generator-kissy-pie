@@ -9,9 +9,6 @@ module.exports = AppGenerator;
 function AppGenerator(args, options, config) {
     Base.apply(this, arguments);
     
-    this.email = Math.random();
-    this.author = Math.random();
-
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 
     this.on('end', function () {
@@ -39,10 +36,45 @@ function AppGenerator(args, options, config) {
 
 util.inherits(AppGenerator, Base);
 
+/**
+ * Scan Project
+ */
+AppGenerator.prototype._scan = function _scan() {
+
+    var pages = this.expand('/*/*.*/', {
+        nomount: true,
+        root: '.',
+        mark: true
+    });
+
+
+    pages = pages.map(function(path){
+        path = path.
+            replace(/\\/g, '/').
+            replace(/(^\/)|(\/$)/g, '');
+
+        var match = path.split('/');
+
+        return {
+            pageName: match[0],
+            version: match[1]
+        }
+
+
+    });
+
+    return {
+        pages: pages
+    };
+
+};
+
 AppGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // welcome message
+    this.log(this.abcLogo);
+
     var welcome =
           " _   ___                "+   "______ _      ".cyan +
         "\n| | / (_)               "+   "| ___ (_)     ".cyan +
@@ -60,6 +92,7 @@ AppGenerator.prototype.askFor = function askFor() {
         abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
     } catch (e) {
     }
+
     if (!abcJSON.author) {
         abcJSON.author = {
             name: '',
@@ -100,6 +133,7 @@ AppGenerator.prototype.askFor = function askFor() {
     ];
 
     this.prompt(prompts, function (err, props) {
+
         if (err) {
             return this.emit('error', err);
         }
