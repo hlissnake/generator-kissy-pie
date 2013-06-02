@@ -2,6 +2,7 @@
 var util = require('util');
 var path = require('path');
 var Base = require('abc-generator').UIBase;
+var pkgInfo = require( path.resolve( process.cwd(), 'abc.json' ) );
 
 
 module.exports = PageGenerator;
@@ -52,7 +53,6 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
     }
 };
 
-
 PageGenerator.prototype.page = function app() {
     console.log('Generating Page. %s', this.pagePath);
     var pagePath = this.pagePath;
@@ -61,6 +61,10 @@ PageGenerator.prototype.page = function app() {
     this.template('fb-build.bat', path.join(pagePath, 'fb-build.bat'));
     this.template('fb-build.sh', path.join(pagePath, 'fb-build.sh'));
     this.template('fb.page.json', path.join(pagePath, 'fb.page.json'));
-    this.template('index.less', path.join(pagePath, 'page', 'index.less'));
     this.template('init.js', path.join(pagePath, 'page', 'init.js'));
+    var styleEngine = pkgInfo._kissy_pie.styleEngine;
+    var styleMainFilename = styleEngine == 'less' ? 'index.less' :
+        ( styleEngine == 'sass' ? 'index.scss' : 'index.css' );
+    this.template('index.less', path.join(pagePath, 'page', styleMainFilename));
+
 };

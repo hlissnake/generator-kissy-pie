@@ -1,3 +1,9 @@
+### V0.1.5
+
+- 1、优化自模板，根据用户选择的样式引擎创建index.less/index.scss/index.css
+- 2、去掉Gruntfile.js中的debug命令
+
+
 ### V0.1.2
 
 - 1、优化部分模板逻辑

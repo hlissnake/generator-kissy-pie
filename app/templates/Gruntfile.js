@@ -369,9 +369,7 @@ module.exports = function (grunt) {
     grunt.registerTask('page', ['clean:page', 'ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %> <% if(enableLess) { %> ,'less:page'<% } %> <% if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
     // 对common进行打包
     grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %><% if(enableLess) { %>, 'less:common'<% } %> <% if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
-    
-    grunt.registerTask('debug', ['page', 'debug-xxx']);
-
+    // 静态资源代理 + watch
     grunt.registerTask('server', ['connect:server', 'watch']);
 
     /**
