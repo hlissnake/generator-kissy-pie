@@ -30,14 +30,15 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
         var cb = this.async();
         this.prompt([{
             name: 'pageName',
-            message: 'Name of you Page?'
+            message: 'My page name is:'
         }, {
             name: 'pageVersion',
-            message: 'version of the page?'
+            message: 'My page version is:'
         }], function (err, props) {
 
             if (err) {
-                return this.emit('error', err);
+                this.emit('error', err);
+                return;
             }
 
             // manually deal with the response, get back and store the results.
@@ -53,14 +54,13 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
     }
 };
 
+
 PageGenerator.prototype.page = function app() {
     console.log('Generating Page. %s', this.pagePath);
     var pagePath = this.pagePath;
     this.mkdir(path.join(pagePath, 'test'));
     this.mkdir(path.join(pagePath, 'page', 'mods'));
-    this.template('fb-build.bat', path.join(pagePath, 'fb-build.bat'));
-    this.template('fb-build.sh', path.join(pagePath, 'fb-build.sh'));
-    this.template('fb.page.json', path.join(pagePath, 'fb.page.json'));
+    this.template('index.less', path.join(pagePath, 'page', 'index.less'));
     this.template('init.js', path.join(pagePath, 'page', 'init.js'));
     var styleEngine = pkgInfo._kissy_pie.styleEngine;
     var styleMainFilename = styleEngine == 'less' ? 'index.less' :
