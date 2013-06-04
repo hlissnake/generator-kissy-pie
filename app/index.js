@@ -12,24 +12,9 @@ function AppGenerator(args, options, config) {
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 
     this.on('end', function () {
-        this.prompt([{
-            name: 'initPage',
-            message: 'Do you add a page right now?',
-            default: 'Y/n',
-            warning: ''
-        }], function (err, props) {
+        this.log('on End!');
 
-            if (err) {
-                return this.emit('error', err);
-            }
 
-            this.initPage = (/y/i).test(props.initPage);
-
-            if (this.initPage) {
-                this.invoke('kissy-pie:page')
-            }
-
-        }.bind(this));
 
     }.bind(this));
 }
@@ -40,6 +25,8 @@ util.inherits(AppGenerator, Base);
  * Scan Project
  */
 AppGenerator.prototype._scan = function _scan() {
+
+
 
     var pages = this.expand('/*/*.*/', {
         nomount: true,
@@ -109,7 +96,7 @@ AppGenerator.prototype.askFor = function askFor() {
         {
             name: 'projectName',
             message: 'Name of Project?',
-            default: path.basename(process.cwd()),
+            default: abcJSON.name || path.basename(process.cwd()),
             warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
         },
         {
@@ -191,8 +178,48 @@ AppGenerator.prototype.install = function install() {
             cb(err);
             return;
         }
-
         self.log.writeln('\n\nnpm was installed successful. \n\n');
 
     });
+};
+
+AppGenerator.prototype.install = function install() {
+    var cb = this.async();
+    var self = this;
+    this.npmInstall('', {}, function (err) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        self.log.writeln('\n\nnpm was installed successful. \n\n');
+        cb();
+    });
+};
+
+AppGenerator.prototype.installSub = function installSub() {
+
+    console.log('install sub generator');
+    var cb = this.async();
+
+    this.prompt([{
+        name: 'initPage',
+        message: 'Do you add a page right now?',
+        default: 'Y/n',
+        warning: ''
+    }], function (err, props) {
+
+        if (err) {
+            cb(err);
+            return;
+        }
+
+        this.initPage = (/y/i).test(props.initPage);
+
+        if (this.initPage) {
+            this.invoke('kissy-pie:page', {}, cb);
+        }
+
+    }.bind(this));
 };
