@@ -330,7 +330,7 @@ module.exports = function (grunt) {
             }<% } %>,
             'common': {
                 // 排除一些任务的产出文件，避免死循环一直文件变更
-                files: [ '<%%= commonBase %>/**/*', '!*-min.js', '!*-tpl.js', '!*-min.css' ],
+                files: [ '<%%= commonBase %>/**/*', '!<%%= commonBase %>/**/*-min.js', '!<%%= commonBase %>/**/*-tpl.js', '!<%%= commonBase %>/**/*-min.css' ],
                 tasks: ['common']
             }
         },
