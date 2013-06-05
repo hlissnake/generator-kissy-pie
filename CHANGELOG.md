@@ -1,9 +1,10 @@
 ### v0.1.6
 
-- 1、解决watch时，common目录下文件变更导致不断执行任务的问题
+- 1、暂时去掉对于common目录的watch（无法很好地解决common下文件变更导致不断执行任务的问题）
 - 2、删除page子任务中产生的历史遗留文件
 - 3、修复sub generator不执行的问题
 - 4、更新README.md
+- 5、由于clean操作会导致`.svn`文件夹被删除，因此去掉clean
 
 ### V0.1.5
 

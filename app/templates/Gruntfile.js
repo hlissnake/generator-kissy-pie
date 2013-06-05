@@ -51,20 +51,6 @@ module.exports = function (grunt) {
         pageBuildBase: '<%%= pageName %>/<%%= timestamp %>/<%%= packageName %>',
 
         /**
-         * 对页面进行清理
-         */
-        clean: {
-
-            page: {
-                src: '<%%= pageName %>/<%%=timestamp %>/'
-            },
-
-            common: {
-                src: '<%%= commonBase %>/*.combo.js'
-            }
-        },
-
-        /**
          * 进行KISSY 打包
          * @link https://github.com/daxingplay/grunt-kmc
          */
@@ -327,12 +313,7 @@ module.exports = function (grunt) {
             'compass': {
                 files: [ '<%%= pageBase %>/**/*.scss', './utils/**/*.scss', '<%%= pageBase %>/**/*.png' ],
                 tasks: ['compass', 'cssmin:page']
-            }<% } %>,
-            'common': {
-                // 排除一些任务的产出文件，避免死循环一直文件变更
-                files: [ '<%%= commonBase %>/**/*', '!<%%= commonBase %>/**/*-min.js', '!<%%= commonBase %>/**/*-tpl.js', '!<%%= commonBase %>/**/*-min.css' ],
-                tasks: ['common']
-            }
+            }<% } %>
         },
 
         connect: {
@@ -348,7 +329,6 @@ module.exports = function (grunt) {
     /**
      * 载入使用到的通过NPM安装的模块
      */
-    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');<% if(enableCSSCombo) { %>
     grunt.loadNpmTasks('grunt-css-combo');<% } %> <% if(enableLess) { %>
@@ -366,7 +346,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'page' ]);
 
     // 对单个页面进行打包
-    grunt.registerTask('page', ['clean:page', 'ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %> <% if(enableLess) { %> ,'less:page'<% } %> <% if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
+    grunt.registerTask('page', ['ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %> <% if(enableLess) { %> ,'less:page'<% } %> <% if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
     // 对common进行打包
     grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %><% if(enableLess) { %>, 'less:common'<% } %> <% if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
     // 静态资源代理 + watch
