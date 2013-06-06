@@ -13,7 +13,7 @@
   "author": "maxbbn <qipbbn@gmail.com>",
   "license": "BSD",
   "dependencies": {
-    "abc-generator": ""
+    "abc-generator": "0.0.4"
   },
   "devDependencies": {
     "should": "~1.2.2"

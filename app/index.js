@@ -12,10 +12,7 @@ function AppGenerator(args, options, config) {
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 
     this.on('end', function () {
-        this.log('on End!');
-
-
-
+        this.log('Thanks for use "KISSY Pie", Have a good day!');
     }.bind(this));
 }
 
@@ -35,17 +32,12 @@ AppGenerator.prototype._scan = function _scan() {
     });
 
 
-    pages = pages.map(function(path){
-        path = path.
-            replace(/\\/g, '/').
-            replace(/(^\/)|(\/$)/g, '');
-
-        var match = path.split('/');
+    pages = pages.map(function(pathname){
 
         return {
-            pageName: match[0],
-            version: match[1]
-        }
+            name: path.basename(path.dirname(pathname)),
+            version: path.basename(pathname)
+        };
 
 
     });
@@ -60,19 +52,7 @@ AppGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // welcome message
-    this.log(this.abcLogo);
-
-    var welcome =
-          " _   ___                "+   "______ _      ".cyan +
-        "\n| | / (_)               "+   "| ___ (_)     ".cyan +
-        "\n| |/ / _ ___ ___ _   _  "+   "| |_/ /_  ___ ".cyan +
-        "\n|    \\| / __/ __| | | | "+  "|  __/| |/ _ \\".cyan +
-        "\n| |\\  \\ \\__ \\__ \\ |_| | "+"| |   | |  __/".cyan +
-        "\n\\_| \\_/_|___/___/\\__, | "+"\\_|   |_|\\___|".cyan +
-        "\n                  __/ |               "+
-        "\n                 |___/                ";
-
-    this.log.writeln(welcome);
+    this.log.writeln(this.abcLogo);
 
     var abcJSON = {};
     try {
@@ -205,8 +185,8 @@ AppGenerator.prototype.installSub = function installSub() {
 
     this.prompt([{
         name: 'initPage',
-        message: 'Do you add a page right now?',
-        default: 'Y/n',
+        message: 'Do you add a page right now? (Y/n)',
+        default: 'n',
         warning: ''
     }], function (err, props) {
 
