@@ -4,6 +4,7 @@ var path = require('path');
 var Base = require('abc-generator').UIBase;
 
 
+
 module.exports = AppGenerator;
 
 function AppGenerator(args, options, config) {
@@ -17,36 +18,6 @@ function AppGenerator(args, options, config) {
 }
 
 util.inherits(AppGenerator, Base);
-
-/**
- * Scan Project
- */
-AppGenerator.prototype._scan = function _scan() {
-
-
-
-    var pages = this.expand('/*/*.*/', {
-        nomount: true,
-        root: '.',
-        mark: true
-    });
-
-
-    pages = pages.map(function(pathname){
-
-        return {
-            name: path.basename(path.dirname(pathname)),
-            version: path.basename(pathname)
-        };
-
-
-    });
-
-    return {
-        pages: pages
-    };
-
-};
 
 AppGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
@@ -202,4 +173,30 @@ AppGenerator.prototype.installSub = function installSub() {
         }
 
     }.bind(this));
+};
+
+/**
+ * Scan Project
+ */
+AppGenerator.prototype._scan = function _scan() {
+
+
+
+    var pages = this.expand('/*/*.*/', {
+        nomount: true,
+        root: '.',
+        mark: true
+    });
+
+    pages = pages.map(function(pathname){
+        return {
+            name: path.basename(path.dirname(pathname)),
+            version: path.basename(pathname).replace(/[\\/]$/, '')
+        };
+    });
+
+    return {
+        pages: pages
+    };
+
 };

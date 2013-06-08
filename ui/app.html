@@ -1,38 +1,67 @@
 <div class="row-fluid">
-    <div class="span12">
-        <h3>common</h3>
-        <button class="btn btn-primary" ng-click="runGrunt('common', null);" >Build Common</button>
-    </div>
-</div>
-<div class="row-fluid">
     <div class="span6">
-        <table class="table">
+        <p>
+
+        </p>
+        <table class="table table-hover table-bordered">
             <thead>
             <tr>
-                <th>Page</th>
-                <th>Action</th>
+                <th>
+                    <input type="text" class="input-medium search-query" ng-model="pageQuery" placeholder="Pages" >
+                </th>
             </tr>
             </thead>
             <tbody>
-            <tr class="clear" ng-repeat="page in app.pages">
-                <td><span>{{page.name}} / {{page.version}}</span></td>
+            <tr ng-class="page.checked && 'success'" ng-repeat="page in app.pages | filter:pageQuery" ng-click="page.checked=!page.checked">
                 <td>
-                    <input type="checkbox" ng-model="page.checked" />
+                    <strong>{{page.name}}</strong> <span class="badge">{{page.version}}</span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="span6">
-        <form ng-submit="grunt('page', {ts: app.timestamp, target: app.pages.fliter(function(){})});" class="form form-inline">
-            <input type="text" ng-model='app.timestamp'/>
-            <button class="btn btn-primary" type="submit">Build</button>
-        </form>
+        <h3>Step1. Choose pages to build</h3>
+        <div ng-show="!(app.pages | filter:{checked: true}).length">
+            Please Choose frome Left!
+        </div>
+        <ul>
+            <li ng-repeat="page in app.pages | filter:{checked: true}">
+                <span>{{page.name}} / {{page.version}}</span>
+                <a class="link" href="#" ng-click="$event.preventDefault();page.checked = false;">remove</a>
+            </li>
+        </ul>
+        <h3>Step2. Timestamp to Build</h3>
+        <input type="text" ng-model='app.timestamp' placeholder="timestamp"/>
+
+        <h3>Step3. OK, Le's Go</h3>
+        <div class="form form-inline">
+            <div class="btn-group">
+                <button
+                        ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
+                        data-tasks="page"
+                        data-attrs="{{app.pages | filter:{checked:true} | joinPages}}"
+                        ng-click="runGrunt($event)"
+                        class="btn btn-primary">Build</button>
+                <button
+                        ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
+                        data-tasks="watch"
+                        data-attrs="{{app.pages | filter:{checked:true} | joinPages}}"
+                        ng-click="runGrunt($event)"
+                        class="btn">
+                    Watch
+                </button>
+            </div>
+        </div>
+
+
 
     </div>
 </div>
+<div class="row-fluid">
+    <div class="span12">
+        <button class="btn btn-success" ng-click="runYeomanSub('page')">add page</button>
 
-
-
-
-<span class="btn btn-success" ng-click="runYeomanSub('page')">add page</span>
+        <button class="btn btn-primary" ng-click="runGrunt($event)" data-tasks="common" >Build Common</button>
+    </div>
+</div>
