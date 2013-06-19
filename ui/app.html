@@ -1,4 +1,15 @@
 <div class="row-fluid">
+    <div class="span12">
+        <p>
+            <button class="btn btn-success" ng-click="runYeomanSub('page')">add page</button>
+            <button class="btn" data-tasks="common" ng-click="grunt.run($event);">build common</button>
+        </p>
+
+    </div>
+</div>
+
+
+<div class="row-fluid">
     <div class="span6">
         <table class="table table-hover table-bordered">
             <thead>
@@ -29,7 +40,7 @@
             </li>
         </ul>
         <h3>Step2. Timestamp to Build</h3>
-        <input type="text" ng-model='app.timestamp' placeholder="timestamp"/>
+        <input type="text" ng-model='app.cache.timestamp' placeholder="timestamp"/>
 
         <h3>Step3. OK, Le's Go</h3>
         <div class="form form-inline">
@@ -38,13 +49,13 @@
                         ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
                         data-tasks="page"
                         data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.timestamp}}"
-                        ng-click="runGrunt($event)"
+                        ng-click="grunt.run($event)"
                         class="btn btn-primary">Build</button>
                 <button
                         ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
                         data-tasks="watch"
                         data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.timestamp}}"
-                        ng-click="runGrunt($event)"
+                        ng-click="grunt.run($event)"
                         class="btn">
                     Watch
                 </button>
@@ -52,15 +63,6 @@
         </div>
 
 
-
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span12">
-
-        <button class="btn btn-success" ng-click="runYeomanSub('page')">add page</button>
-        <button class="btn btn-primary" ng-click="runGrunt($event)" data-tasks="common" >Build Common</button>
-        <button ng-click="runGrunt($event);">grunt</button>
 
     </div>
 </div>

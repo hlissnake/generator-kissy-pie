@@ -180,8 +180,6 @@ AppGenerator.prototype.installSub = function installSub() {
  */
 AppGenerator.prototype._scan = function _scan() {
 
-
-
     var pages = this.expand('/*/*.*/', {
         nomount: true,
         root: '.',
