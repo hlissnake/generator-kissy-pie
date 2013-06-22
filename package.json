@@ -1,6 +1,6 @@
 {
   "name": "generator-kissy-pie",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "kissy generator for kissypie",
   "main": "app/index.js",
   "scripts": {
