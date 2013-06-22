@@ -8,12 +8,11 @@ var pkgInfo = require( path.resolve( process.cwd(), 'abc.json' ) );
 module.exports = PageGenerator;
 
 function PageGenerator(args, options, config) {
-    var self = this;
     Base.apply(this, arguments);
 
     this.on('end', function () {
-        console.log('\nSuccess Generated Page:%s', self.pagePath.green);
-    });
+        this.log.writeln('done!');
+    }.bind(this));
 
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 }
@@ -22,9 +21,7 @@ util.inherits(PageGenerator, Base);
 
 PageGenerator.prototype.askFor = function askFor(pagePath) {
 
-    var welcome = this.abcLogo;
-
-    this.log(welcome, 'kissy-pie:page');
+    this.log(this.abcLogo);
 
     if (!pagePath) {
         var cb = this.async();
@@ -34,12 +31,7 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
         }, {
             name: 'pageVersion',
             message: 'My page version is:'
-        }], function (err, props) {
-
-            if (err) {
-                this.emit('error', err);
-                return;
-            }
+        }], function ( props) {
 
             // manually deal with the response, get back and store the results.
             // we change a bit this way of doing to automatically do this in the self.prompt() method.
@@ -56,7 +48,7 @@ PageGenerator.prototype.askFor = function askFor(pagePath) {
 
 
 PageGenerator.prototype.page = function app() {
-    console.log('Generating Page. %s', this.pagePath);
+    this.log.writeln('Generating Page. %s', this.pagePath);
     var pagePath = this.pagePath;
     this.mkdir(path.join(pagePath, 'test'));
     this.mkdir(path.join(pagePath, 'page', 'mods'));

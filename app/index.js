@@ -37,6 +37,7 @@ AppGenerator.prototype.askFor = function askFor() {
             email: ''
         }
     }
+
     if (!abcJSON._kissy_pie) {
         abcJSON._kissy_pie = {
             styleEngine: ''
@@ -70,11 +71,7 @@ AppGenerator.prototype.askFor = function askFor() {
         }
     ];
 
-    this.prompt(prompts, function (err, props) {
-
-        if (err) {
-            return this.emit('error', err);
-        }
+    this.prompt(prompts, function (props) {
 
         // manually deal with the response, get back and store the results.
         // we change a bit this way of doing to automatically do this in the self.prompt() method.
@@ -159,12 +156,7 @@ AppGenerator.prototype.installSub = function installSub() {
         message: 'Do you add a page right now? (Y/n)',
         default: 'n',
         warning: ''
-    }], function (err, props) {
-
-        if (err) {
-            cb(err);
-            return;
-        }
+    }], function ( props) {
 
         this.initPage = (/y/i).test(props.initPage);
 

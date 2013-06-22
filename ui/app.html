@@ -46,23 +46,20 @@
         <div class="form form-inline">
             <div class="btn-group">
                 <button
-                        ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
+                        ng-disabled="!app.cache.timestamp || !(app.pages | filter:{checked:true}).length"
                         data-tasks="page"
-                        data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.timestamp}}"
+                        data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.cache.timestamp}}"
                         ng-click="grunt.run($event)"
                         class="btn btn-primary">Build</button>
                 <button
-                        ng-disabled="!app.timestamp || !(app.pages | filter:{checked:true}).length"
+                        ng-disabled="!app.cache.timestamp || !(app.pages | filter:{checked:true}).length"
                         data-tasks="watch"
-                        data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.timestamp}}"
+                        data-attrs="target={{app.pages | filter:{checked:true} | joinPages}}&ts={{app.cache.timestamp}}"
                         ng-click="grunt.run($event)"
                         class="btn">
                     Watch
                 </button>
             </div>
         </div>
-
-
-
     </div>
 </div>
