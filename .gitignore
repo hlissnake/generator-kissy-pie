@@ -18,3 +18,4 @@ node_modules/
 tmp/
 reports/
 .sass-cache/
+test/temp/

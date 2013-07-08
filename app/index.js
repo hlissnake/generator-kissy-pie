@@ -3,8 +3,6 @@ var util = require('util');
 var path = require('path');
 var Base = require('abc-generator').UIBase;
 
-
-
 module.exports = AppGenerator;
 
 function AppGenerator(args, options, config) {
@@ -134,38 +132,44 @@ AppGenerator.prototype.install = function install() {
 AppGenerator.prototype.install = function install() {
     var cb = this.async();
     var self = this;
-    this.npmInstall('', {}, function (err) {
 
-        if (err) {
-            cb(err);
-            return;
-        }
-
-        self.log.writeln('\n\nnpm was installed successful. \n\n');
+    if( this.options[ 'skip-install' ] ){
         cb();
-    });
+    }
+    else {
+        this.npmInstall('', {}, function (err) {
+
+            if (err) {
+                cb(err);
+                return;
+            }
+
+            self.log.writeln('\n\nnpm was installed successful. \n\n');
+            cb();
+        });
+    }
 };
 
-AppGenerator.prototype.installSub = function installSub() {
-
-    console.log('install sub generator');
-    var cb = this.async();
-
-    this.prompt([{
-        name: 'initPage',
-        message: 'Do you add a page right now? (Y/n)',
-        default: 'n',
-        warning: ''
-    }], function ( props) {
-
-        this.initPage = (/y/i).test(props.initPage);
-
-        if (this.initPage) {
-            this.invoke('kissy-pie:page', {}, cb);
-        }
-
-    }.bind(this));
-};
+//AppGenerator.prototype.installSub = function installSub() {
+//
+//    console.log('install sub generator');
+//    var cb = this.async();
+//
+//    this.prompt([{
+//        name: 'initPage',
+//        message: 'Do you add a page right now? (Y/n)',
+//        default: 'n',
+//        warning: ''
+//    }], function ( props) {
+//
+//        this.initPage = (/y/i).test(props.initPage);
+//
+//        if (this.initPage) {
+//            this.invoke('kissy-pie:page', {}, cb);
+//        }
+//
+//    }.bind(this));
+//};
 
 /**
  * Scan Project

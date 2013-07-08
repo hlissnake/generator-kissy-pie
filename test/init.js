@@ -11,8 +11,7 @@ var helpers = require('yeoman-generator').test;
 describe('ABC - KISSY-PIE generator', function () {
     var KISSYPie;
 
-    it('should generate dotfiles', function (done) {
-
+    beforeEach(function( done ){
         helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
             if (err) {
                 done(err);
@@ -22,45 +21,48 @@ describe('ABC - KISSY-PIE generator', function () {
             ]);
 
             KISSYPie.options['skip-install'] = true;
-
-            helpers.mockPrompt( KISSYPie, {
-                projectName: "my_project",
-                author: 'neekey',
-                email: 'ni184775761@gmail.com',
-                styleEngine: 'sass'
-            });
-
-            KISSYPie.run({}, function () {
-                helpers.assertFiles(['.gitattributes', '.gitignore', '.editorconfig', '.jshintrc']);
-                done();
-            });
-
             done();
         });
-
-
     });
-//
-//    it('creates expected files', function (done) {
-//        var expected = [
-//            'utils/',
-//            'common/',
-//            'Gruntfile.js',
-//            'package.json',
-//            'abc.json'
-//        ];
-//        helpers.mockPrompt( KISSYPie, {
-//            projectName: "my_project",
-//            author: 'neekey',
-//            email: 'ni184775761@gmail.com',
-//            styleEngine: 'sass'
-//        });
-//
-//        KISSYPie.run({}, function() {
-//            helpers.assertFiles(expected);
-//            done();
-//        });
-//    });
+
+    it('should generate dotfiles', function (done) {
+
+        helpers.mockPrompt( KISSYPie, {
+            projectName: "my_project",
+            author: 'neekey',
+            email: 'ni184775761@gmail.com',
+            styleEngine: 'sass'
+        });
+
+        KISSYPie.run({}, function () {
+            helpers.assertFiles(['.gitattributes', '.gitignore', '.editorconfig', '.jshintrc']);
+            done();
+        });
+    });
+
+    it('creates expected files', function (done) {
+
+        var expected = [
+            'utils/',
+            'common/',
+            'Gruntfile.js',
+            'package.json',
+            'abc.json'
+        ];
+        helpers.mockPrompt( KISSYPie, {
+            projectName: "my_project",
+            author: 'neekey',
+            email: 'ni184775761@gmail.com',
+            styleEngine: 'sass'
+        });
+
+        KISSYPie.run({}, function() {
+            helpers.assertFiles(expected);
+            done();
+        });
+    });
+
+
 
 //    describe('Controller', function () {
 //        it('should generate a new controller', function (done) {
