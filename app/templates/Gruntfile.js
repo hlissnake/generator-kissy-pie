@@ -88,7 +88,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: [ '*.js', '!*.combo.js', '!*-min.js' ],
+                        src: [ '**/*.js', '!**/*.combo.js', '!**/_*.js', '!**/*-min.js' ],
                         dest: '<%%= commonBase %>',
                         ext: '-min.js'
                     }
@@ -137,6 +137,20 @@ module.exports = function (grunt) {
                 ]
             }
         }<% if(enableCSSCombo) { %>,
+
+//        copy: {
+//            page: {
+//                files: [
+//                    {
+//                        expand: true,
+//                        cwd: '<%= pageBase %>',
+//                        dest: '<%= pageName%>/<%=timestamp %>/<%= packageName %>/',
+//                        src: '**/*.css',
+//                        ext: '.css'
+//                    }
+//                ]
+//            }
+//        },
         /**
          * CSS-Combo
          */
@@ -196,7 +210,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: '*.less',
+                        src: [ '**/*.less', '!**/_*.less' ],
                         dest: '<%%= commonBase %>',
                         ext: '.css'
                     }
@@ -249,19 +263,23 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= pageBuildBase %>',
-                        src: ['*.js', '!*-min.js'],
+                        src: ['**/*.js', '!**/*-min.js'],
                         dest: '<%%= pageBuildBase %>',
                         ext: '-min.js'
                     }
                 ]
             },
 
+            /**
+             * 由于common的原码和build目录都在一起，因此前面经过kmc的编译，源文件已经生成了-min.js文件
+             * 因此这里只需要把-min.js文件压缩一下就可以了
+             */
             common: {
                 files: [
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: ['*-min.js'],
+                        src: ['**/*-min.js'],
                         dest: '<%%= commonBase %>'
                     }
                 ]
@@ -278,7 +296,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= pageBuildBase %>',
-                        src: ['*.css', '!*-min.css'],
+                        src: ['**/*.css', '!**/*-min.css'],
                         dest: '<%%= pageBuildBase %>',
                         ext: '-min.css'
                     }
@@ -289,7 +307,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: ['*.css', '!*-min.css'],
+                        src: ['**/*.css', '!**/*-min.css', '!**/_*.css'],
                         dest: '<%%= commonBase %>',
                         ext: '-min.css'
                     }
