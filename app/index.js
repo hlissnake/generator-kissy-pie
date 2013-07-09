@@ -47,7 +47,7 @@ AppGenerator.prototype.askFor = function askFor() {
             name: 'projectName',
             message: 'Name of Project?',
             default: abcJSON.name || path.basename(process.cwd()),
-            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+            warning: ''
         },
         {
             name: 'author',
@@ -65,7 +65,7 @@ AppGenerator.prototype.askFor = function askFor() {
             name: 'styleEngine',
             message: 'Whitch style engin do you use [css-combo|less|sass]?',
             default: abcJSON._kissy_pie.styleEngine,
-            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+            warning: ''
         }
     ];
 
@@ -80,7 +80,6 @@ AppGenerator.prototype.askFor = function askFor() {
         this.enableLess = (/less/i).test(this.styleEngine);
         this.enableSass = (/sass/i).test(this.styleEngine);
         this.enableCSSCombo = (/css-combo/i).test(this.styleEngine);
-
         cb();
     }.bind(this));
 };
@@ -125,7 +124,6 @@ AppGenerator.prototype.install = function install() {
             return;
         }
         self.log.writeln('\n\nnpm was installed successful. \n\n');
-
     });
 };
 
@@ -150,26 +148,37 @@ AppGenerator.prototype.install = function install() {
     }
 };
 
-//AppGenerator.prototype.installSub = function installSub() {
-//
-//    console.log('install sub generator');
-//    var cb = this.async();
-//
-//    this.prompt([{
-//        name: 'initPage',
-//        message: 'Do you add a page right now? (Y/n)',
-//        default: 'n',
-//        warning: ''
-//    }], function ( props) {
-//
-//        this.initPage = (/y/i).test(props.initPage);
-//
-//        if (this.initPage) {
-//            this.invoke('kissy-pie:page', {}, cb);
-//        }
-//
-//    }.bind(this));
-//};
+AppGenerator.prototype.installSubTip = function installSub() {
+
+    this.log.writeln('\n****************************************************');
+    this.log.writeln('\n  【下一步】使用 yo kissy-pie:page 命令来创建子页面');
+    this.log.writeln('\n****************************************************\n');
+};
+
+/**
+ * 先取消掉该方法，因为会对单元测试造成影响，导致run方法无法返回
+ *
+AppGenerator.prototype.installSub = function installSub() {
+
+    console.log('install sub generator');
+    var cb = this.async();
+
+    this.prompt([{
+        name: 'initPage',
+        message: 'Do you add a page right now? (Y/n)',
+        default: 'n',
+        warning: ''
+    }], function ( props) {
+
+        this.initPage = (/y/i).test(props.initPage);
+
+        if (this.initPage) {
+            this.invoke('kissy-pie:page', {}, cb);
+        }
+
+    }.bind(this));
+};
+*/
 
 /**
  * Scan Project
