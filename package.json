@@ -4,7 +4,7 @@
   "description": "kissy generator for kissypie",
   "main": "app/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -t 0 -R spec"
   },
   "repository": "",
   "keywords": [

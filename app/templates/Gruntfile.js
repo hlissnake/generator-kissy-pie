@@ -129,7 +129,7 @@ module.exports = function (grunt) {
         /**
          * CSS-Combo
          */
-        'css-combo': {
+        css_combo: {
             options: {
                 paths: [ '.' ]
             },
@@ -138,9 +138,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= pageBase %>',
+                        cwd: '<%%= pageBase %>',
                         src: '*.css',
-                        dest: '<%= pageBuildBase %>'
+                        dest: '<%%= pageBuildBase %>'
                     }
                 ]
             },
@@ -149,13 +149,13 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= commonBase %>',
+                        cwd: '<%%= commonBase %>',
                         src: [ '**/*.css', '!**/_*.css' ],
-                        dest: '<%= commonBase %>'
+                        dest: '<%%= commonBase %>'
                     }
                 ]
             }
-        }<% } %><% if(enableLess) { %>,
+        }<% } if(enableLess) { %>,
 
         /**
          * 将LESS编译为CSS
@@ -189,7 +189,7 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        }<% } %><% if(enableSass) { %>,
+        }<% } if(enableSass) { %>,
 
         /**
          * 编译Compass & SASS
@@ -296,14 +296,18 @@ module.exports = function (grunt) {
             'tpl': {
                 files: ['<%%= pageBase %>/**/*-tpl.html', './utils/**/*-tpl.html' ],
                 tasks: ['ktpl']
-            }<% if(enableLess) { %>,
+            }<% if(enableCSSCombo) { %>,
+            'css_combo': {
+                files: [ '<%%= pageBase %>/**/*.css', './utils/**/*.css' ],
+                tasks: [ 'css_combo', 'cssmin:page']
+            }<% } if(enableLess) { %>,
             'less': {
                 files: [ '<%%= pageBase %>/**/*.less', './utils/**/*.less' ],
-                tasks: ['less', 'cssmin:page']
-            }<% } %><% if(enableSass) { %>,
+                tasks: [ 'less', 'cssmin:page']
+            }<% } if(enableSass) { %>,
             'compass': {
                 files: [ '<%%= pageBase %>/**/*.scss', './utils/**/*.scss', '<%%= pageBase %>/**/*.png' ],
-                tasks: ['compass', 'cssmin:page']
+                tasks: [ 'compass', 'cssmin:page']
             }<% } %>
         },
 
@@ -328,9 +332,9 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'page' ]);
 
     // 对单个页面进行打包
-    grunt.registerTask('page', ['ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %> <% if(enableLess) { %> ,'less:page'<% } %> <% if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
+    grunt.registerTask('page', ['ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css_combo:page'<% } if(enableLess) { %> ,'less:page'<% } if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
     // 对common进行打包
-    grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css-combo:page'<% } %><% if(enableLess) { %>, 'less:common'<% } %> <% if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
+    grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css_combo:common'<% } if(enableLess) { %>, 'less:common'<% } if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
     // 静态资源代理 + watch
     grunt.registerTask('server', ['connect:server', 'watch']);
 

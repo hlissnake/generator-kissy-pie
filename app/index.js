@@ -63,7 +63,7 @@ AppGenerator.prototype.askFor = function askFor() {
         },
         {
             name: 'styleEngine',
-            message: 'Whitch style engin do you use [css-combo|less|sass]?',
+            message: 'Whitch style engin do you use [css|less|sass]?',
             default: abcJSON._kissy_pie.styleEngine,
             warning: ''
         }
@@ -79,7 +79,7 @@ AppGenerator.prototype.askFor = function askFor() {
         this.styleEngine = props.styleEngine;
         this.enableLess = (/less/i).test(this.styleEngine);
         this.enableSass = (/sass/i).test(this.styleEngine);
-        this.enableCSSCombo = (/css-combo/i).test(this.styleEngine);
+        this.enableCSSCombo = (/css/i).test(this.styleEngine);
         cb();
     }.bind(this));
 };
@@ -109,7 +109,6 @@ AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
     this.mkdir('tools');
     this.mkdir('common');
-    this.copy('README.md', 'README.md');
     this.template('abc.json');
     this.template('package-config.js', 'common/package-config.js');
 };
