@@ -2,23 +2,12 @@ var KISSYPie = require( 'abc-gruntfile-helper').kissypie;
 
 module.exports = function (grunt) {
 
-    /**
-     * 下列命令执行下面命令若不给定参数，则默认添加下面配置
-     *      `grunt watch`
-     *      `grunt page`
-     *      `grunt common`
-     * 可用配置：
-     *      timestamp: {String} 时间戳目录,
-     *      buildPage: {String|Array} pageName/version/pkgName
-     */
-    var DEFAULTS = {
-        timestamp: '201279879',
-        buildPages: [ 'home/1.0']
-    };
+    var ABCConfig = grunt.file.readJSON('abc.json');
 
     /**
      *  分析用户给定的参数
      *  @example
+     *      打包common:    `grunt common`
      *      单个页面：
      *          打包：     `grunt page --target home/1.0 --ts 20130412`
      *          watch：    `grunt watch --target home/1.0 --ts 20130412`
@@ -26,7 +15,7 @@ module.exports = function (grunt) {
      *          打包：     `grunt page --target home/1.0,intro/2.0 --ts 20130506`
      *          watch:    `grunt watch --target home/1.0,intro/2.0 --ts 20130506`
      */
-    var options = KISSYPie.parse( grunt, DEFAULTS );
+    var options = KISSYPie.parse( grunt, ABCConfig._kissy_pie.defaults );
 
     /**
      * 对每个具体任务进行配置
@@ -137,36 +126,21 @@ module.exports = function (grunt) {
                 ]
             }
         }<% if(enableCSSCombo) { %>,
-
-//        copy: {
-//            page: {
-//                files: [
-//                    {
-//                        expand: true,
-//                        cwd: '<%= pageBase %>',
-//                        dest: '<%= pageName%>/<%=timestamp %>/<%= packageName %>/',
-//                        src: '**/*.css',
-//                        ext: '.css'
-//                    }
-//                ]
-//            }
-//        },
         /**
          * CSS-Combo
          */
         'css-combo': {
             options: {
-                paths: ['.', '<%%= pageBase %>']
+                paths: [ '.' ]
             },
 
             page: {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%%= pageBase %>',
-                        src: '*.less',
-                        dest: '<%%= pageBuildBase %>',
-                        ext: '.css'
+                        cwd: '<%= pageBase %>',
+                        src: '*.css',
+                        dest: '<%= pageBuildBase %>'
                     }
                 ]
             },
@@ -175,10 +149,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%%= commonBase %>',
-                        src: '*.less',
-                        dest: '<%%= commonBase %>',
-                        ext: '.css'
+                        cwd: '<%= commonBase %>',
+                        src: [ '**/*.css', '!**/_*.css' ],
+                        dest: '<%= commonBase %>'
                     }
                 ]
             }
@@ -347,16 +320,7 @@ module.exports = function (grunt) {
     /**
      * 载入使用到的通过NPM安装的模块
      */
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');<% if(enableCSSCombo) { %>
-    grunt.loadNpmTasks('grunt-css-combo');<% } %> <% if(enableLess) { %>
-    grunt.loadNpmTasks('grunt-contrib-less');<% } %> <% if(enableSass) { %>
-    grunt.loadNpmTasks('grunt-contrib-compass');<% } %>
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-kissy-template');
-    grunt.loadNpmTasks('grunt-kmc');
-    grunt.loadNpmTasks('grunt-contrib-connect');
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     /**
      * 注册基本任务

@@ -9,6 +9,10 @@
     },
     "_kissy_pie" : {
         "groups": {},
-        "styleEngine": "<%= styleEngine %>"
+        "styleEngine": "<%= styleEngine %>",
+        "defaults": {
+            "timestamp": "201279879",
+            "buildPages": [ "home/1.0" ]
+        }
     }
 }
