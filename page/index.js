@@ -3,7 +3,6 @@
 var util = require('util');
 var path = require('path');
 var Base = require('abc-generator').UIBase;
-var pkgInfo = require( path.resolve( process.cwd(), 'abc.json' ) );
 
 module.exports = PageGenerator;
 
@@ -59,6 +58,13 @@ PageGenerator.prototype.page = function app() {
     this.mkdir(path.join(pagePath, 'page', 'mods'));
     this.copy('init.js', path.join(pagePath, 'page', 'init.js'));
 
+    /**
+     * 读取用户目录中的abc.json文件，防止在这个未知的原因
+     *  1、在进行单元测试时，使用require的方式引入的话，就只会使用第一次require的文件状态，所以使用读取文件的方式
+     *  2、若放在文件全局，其内容也是创建generator的状态
+     */
+    var pkgInfo = JSON.parse(this.readFileAsString(path.resolve( process.cwd(), 'abc.json' )));
+    // 读取使用的样式引擎
     var styleEngine = pkgInfo._kissy_pie.styleEngine;
 
     switch( styleEngine ){
