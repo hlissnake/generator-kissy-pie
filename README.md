@@ -1,5 +1,7 @@
 A yeoman generator for kissy pie
 
+[![Build Status](https://secure.travis-ci.org/neekey/generator-kissy-pie.png)](http://travis-ci.org/neekey/generator-kissy-pie)
+
 ## install
 ### 安装yeoman
 ````sh
