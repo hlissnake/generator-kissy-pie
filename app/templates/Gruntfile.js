@@ -289,25 +289,45 @@ module.exports = function (grunt) {
         },
 
         watch: {
-            'js': {
+            page_html: {
+                files: [ '<%%= pageBase %>/**/*-tpl.html', './utils/**/*-tpl.html' ],
+                tasks: [ 'ktpl:page' ]
+            },
+            common_html: {
+                files: [ '<%%= commonBase %>/**/*-tpl.html', './utils/**/*-tpl.html' ],
+                tasks: [ 'ktpl:common' ]
+            },
+            page_js: {
                 files: [ '<%%= pageBase %>/**/*.js', './utils/**/*.js' ],
                 tasks: [ 'kmc:page', 'uglify:page' ]
             },
-            'tpl': {
-                files: ['<%%= pageBase %>/**/*-tpl.html', './utils/**/*-tpl.html' ],
-                tasks: ['ktpl']
-            }<% if(enableCSSCombo) { %>,
-            'css_combo': {
-                files: [ '<%%= pageBase %>/**/*.css', './utils/**/*.css' ],
-                tasks: [ 'css_combo', 'cssmin:page']
-            }<% } if(enableLess) { %>,
-            'less': {
+            common_js: {
+                files: [ '<%%= commonBase %>/**/*.js', './utils/**/*.js' ],
+                tasks: [ 'kmc:common', 'uglify:common' ]
+            }<% if(enableLess) { %>,
+            page_less: {
                 files: [ '<%%= pageBase %>/**/*.less', './utils/**/*.less' ],
-                tasks: [ 'less', 'cssmin:page']
+                tasks: [ 'less:page', 'cssmin:page' ]
+            },
+            common_less: {
+                files: [ '<%%= commonBase %>/**/*.less', './utils/**/*.less' ],
+                tasks: [ 'less:common', 'cssmin:common' ]
             }<% } if(enableSass) { %>,
-            'compass': {
-                files: [ '<%%= pageBase %>/**/*.scss', './utils/**/*.scss', '<%%= pageBase %>/**/*.png' ],
-                tasks: [ 'compass', 'cssmin:page']
+            page_sass: {
+                files: [ '<%%= pageBase %>/**/*.scss', '<%%= pageBase %>/**/*.sass', './utils/**/*.scss', './utils/**/*.sass', '<%%= pageBase %>/**/*.png' ],
+                tasks: [ 'compass:page', 'cssmin:page' ]
+            },
+            common_sass: {
+                files: [ '<%%= commonBase %>/**/*.scss', '<%%= commonBase %>/**/*.sass', './utils/**/*.scss', './utils/**/*.sass', '<%%= commonBase %>/**/*.png' ],
+                tasks: [ 'compass:common', 'cssmin:common' ]
+            }<% } if(enableCSSCombo) { %>,
+            page_css: {
+                files: [ '<%%= pageBase %>/**/*.css', './utils/**/*.css' ],
+                tasks: [ 'css_combo:page', 'cssmin:page' ]
+            },
+            common_css: {
+                files: [ '<%%= commonBase %>/**/*.css', './utils/**/*.css' ],
+                tasks: [ 'css_combo:common', 'cssmin:common' ]
             }<% } %>
         },
 

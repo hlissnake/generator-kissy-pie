@@ -66,7 +66,7 @@ describe('ABC - KISSY-PIE generator', function () {
                 [ 'Gruntfile.js', /compass\:page/ ],
                 [ 'Gruntfile.js', /compass\:common/ ],
                 // 检查watch配置
-                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'compass\'/ ],
+                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'compass\:/ ],
                 // 检查abc信息
                 [ 'abc.json', /"styleEngine"\:\s*"sass"/ ]
             ];
@@ -90,7 +90,7 @@ describe('ABC - KISSY-PIE generator', function () {
                 [ 'Gruntfile.js', /less\:\s*\{/ ],
                 [ 'Gruntfile.js', /less\:page/ ],
                 [ 'Gruntfile.js', /less\:common/ ],
-                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'less\'/ ],
+                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'less\:/ ],
                 [ 'abc.json', /"styleEngine"\:\s*"less"/ ]
             ];
             helpers.mockPrompt( KISSYPie, {
@@ -113,7 +113,7 @@ describe('ABC - KISSY-PIE generator', function () {
                 [ 'Gruntfile.js', /css_combo\:\s*\{/ ],
                 [ 'Gruntfile.js', /css_combo\:page/ ],
                 [ 'Gruntfile.js', /css_combo\:common/ ],
-                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'css_combo\'/ ],
+                [ 'Gruntfile.js', /tasks\:\s*\[\s*\'css_combo\:/ ],
                 [ 'abc.json', /"styleEngine"\:\s*"css"/ ]
             ];
             helpers.mockPrompt( KISSYPie, {
