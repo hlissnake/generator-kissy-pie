@@ -12,7 +12,7 @@
         "styleEngine": "css",
         "defaults": {
             "timestamp": "20130712",
-            "buildPages": [ "home/1.0" ]
+            "buildPages": [ "home/1.0", "home2/1.0" ]
         }
     }
 }

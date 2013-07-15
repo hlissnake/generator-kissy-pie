@@ -3,7 +3,8 @@
  */
 
 'use strict';
-var NPM = require( 'npm' );
+var NPM = require( './helper/npm' );
+var Grunt = require( './helper/grunt' );
 var fs = require('fs-extra');
 var path = require('path');
 var generators = require('yeoman-generator');
@@ -21,79 +22,47 @@ describe('ABC - KISSY-PIE generator', function () {
                 done( err );
             }
             else {
-//                console.log( path.resolve( __dirname, 'build_common' ), path.resolve( __dirname, 'build_test' ) )
                 fs.copy( path.resolve( __dirname, 'build_common' ), path.resolve( __dirname, 'build_test' ), function( err ){
                     if( err ){
                         done( err );
                     }
                     else {
                         // 先安装依赖
-                        NPM.load({},function(err){
+                        NPM.install( path.resolve( __dirname, 'build_test' ), function(err){
                             if( err ){
                                 done(err)
                             }
                             else {
-                                NPM.commands.install(
-                                    path.resolve( __dirname, 'build_test' ),
-                                    require( path.resolve( __dirname, 'build_test/package.json') ).devDependencies,
-                                    function( err, data ){
+                                Grunt.exec( path.resolve( __dirname, 'build_test' ), [ 'page' ], function( err ){
 
-                                        if( err ){
-                                            done( err );
-                                        }
-                                        else {
-                                            // 执行grunt操作 打包page
-                                            var spawn = require('child_process').spawn;
-                                            var grunt = spawn('grunt', [ 'page' ] );
+                                    if( err ){
+                                        done( err );
+                                    }
+                                    else {
 
-                                            grunt.stdout.on('data', function (data) {
-                                                console.log('stdout: ' + data);
-                                            });
+                                        Grunt.exec( path.resolve( __dirname, 'build_test' ), [ 'common' ], function( err ){
 
-                                            grunt.stderr.on('data', function (data) {
-                                                console.log('stderr: ' + data);
-                                            });
+                                            // 检查文件
+                                            helpers.assertFiles([
+                                                'home/1.0',
+                                                'home/20130712/page/init.js',
+                                                'home/20130712/page/init-min.js',
+                                                'home/1.0/page/mods/overlay-tpl.js',
+                                                'common/package-config-min.js',
+                                                'common/out-min.js',
+                                                'common/tooltip/in-min.js',
+                                                'common/mods/popup-tpl.js'
+                                            ]);
 
-                                            grunt.on('close', function (code) {
-
-                                                // 打包common
-                                                var spawn = require('child_process').spawn;
-                                                var grunt = spawn('grunt', [ 'common' ] );
-
-                                                grunt.stdout.on('data', function (data) {
-                                                    console.log('stdout: ' + data);
-                                                });
-
-                                                grunt.stderr.on('data', function (data) {
-                                                    console.log('stderr: ' + data);
-                                                });
-
-                                                grunt.on('close', function () {
-
-                                                    // 检查文件
-                                                    helpers.assertFiles([
-                                                        'home/1.0',
-                                                        'home/20130712/page/init.js',
-                                                        'home/20130712/page/init-min.js',
-                                                        'home/1.0/page/mods/overlay-tpl.js',
-                                                        'common/package-config-min.js',
-                                                        'common/out-min.js',
-                                                        'common/tooltip/in-min.js',
-                                                        'common/mods/popup-tpl.js',
-                                                    ]);
-
-                                                    done();
-                                                });
-                                            });
-                                        }
-                                    });
+                                            done();
+                                        });
+                                    }
+                                }, true );
                             }
                         });
-
                     }
                 });
             }
-
         });
     });
 });
