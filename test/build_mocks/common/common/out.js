@@ -23,5 +23,6 @@ KISSY.add(function (S) {
 }, { requires: [
     './mods/_common_mod',
     './mods/popup-tpl',
-    'utils/utils_mod'
+    'utils/utils_mod',
+    'utils/utils-tpl'
 ]});

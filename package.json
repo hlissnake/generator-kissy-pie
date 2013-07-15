@@ -13,10 +13,10 @@
   "author": "maxbbn <qipbbn@gmail.com>",
   "license": "BSD",
   "dependencies": {
-    "abc-generator": "0.1.1",
-    "yeoman-generator": "~0.12.1"
+    "abc-generator": "0.1.1"
   },
   "devDependencies": {
+    "yeoman-generator": "~0.12.1",
     "grunt-cli": "*",
     "npm": "*",
     "mocha": "~1.12.0",

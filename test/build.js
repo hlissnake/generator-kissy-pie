@@ -73,7 +73,9 @@ describe('ABC - KISSY-PIE generator build', function () {
                                     // common: subdir kmc & uglify
                                     'common/tooltip/in-min.js',
                                     // common: ktpl
-                                    'common/mods/popup-tpl.js'
+                                    'common/mods/popup-tpl.js',
+                                    // utils: ktpl
+                                    'utils/utils-tpl.js'
                                 ]);
 
                                 done();

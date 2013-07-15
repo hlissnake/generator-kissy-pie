@@ -23,5 +23,6 @@ KISSY.add(function (S) {
 }, { requires: [
     './mods/page_mod',
     './mods/overlay-tpl',
-    'utils/utils_mod'
+    'utils/utils_mod',
+    'utils/utils-tpl'
 ]});

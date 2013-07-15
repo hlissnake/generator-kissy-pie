@@ -353,9 +353,9 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'page' ]);
 
     // 对单个页面进行打包
-    grunt.registerTask('page', ['ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css_combo:page'<% } if(enableLess) { %> ,'less:page'<% } if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
+    grunt.registerTask('page', [ 'ktpl:utils', 'ktpl:page','kmc:page', 'uglify:page'<% if(enableCSSCombo) { %>, 'css_combo:page'<% } if(enableLess) { %> ,'less:page'<% } if(enableSass) { %>, 'compass:page'<% } %>, 'cssmin:page']);
     // 对common进行打包
-    grunt.registerTask('common', ['ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css_combo:common'<% } if(enableLess) { %>, 'less:common'<% } if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
+    grunt.registerTask('common', [ 'ktpl:utils', 'ktpl:common', 'kmc:common', 'uglify:common'<% if(enableCSSCombo) { %>, 'css_combo:common'<% } if(enableLess) { %>, 'less:common'<% } if(enableSass) { %>, 'compass:common'<% } %>, 'cssmin:common']);
     // 静态资源代理 + watch
     grunt.registerTask('server', ['connect:server', 'watch']);
 
