@@ -3,6 +3,7 @@ A yeoman generator for kissy pie
 [![Build Status](https://secure.travis-ci.org/neekey/generator-kissy-pie.png)](http://travis-ci.org/neekey/generator-kissy-pie)
 
 ## install
+
 ### 安装yeoman
 ````sh
 npm install yo -g
@@ -13,7 +14,7 @@ npm install yo -g
 第一步:
 
 ```sh
-$ npm link
+$ npm install generator-kissy-pie -g
 ```
 
 第二步, 在你的应用目录内:
@@ -21,26 +22,28 @@ $ npm link
 ```sh
 $ mkdir my-app && cd myapp
 $ yo kissy-pie #执行yeoman
-````
+```
+
+第三步，创建page
+
+```sh
+$ yo kissy-pie:page
+```
 
 ## 快速使用
 
-打开`Gruntfile.js`，找到文件上方的这个部分：
+打开`abc.json`，找到这个部分：
 
 ```js
- /**
-     * 下列命令执行下面命令若不给定参数，则默认添加下面配置
-     *      `grunt watch`
-     *      `grunt page`
-     *      `grunt common`
-     * 可用配置：
-     *      timestamp: {String} 时间戳目录,
-     *      buildPage: {String|Array} pageName/version/pkgName
-     */
-    var DEFAULTS = {
-        timestamp: '20130510',
-        buildPages: [ 'finished_task/1.0']
-    };
+
+    "_kissy_pie" : {
+        "groups": {},
+        "styleEngine": "sass",
+        "defaults": {
+            "timestamp": "201279879",
+            "buildPages": [ "home/1.0" ]
+        }
+    }
 ```
 
 设置你需要打包的page，原码版本和对应的时间戳：
@@ -48,13 +51,14 @@ $ yo kissy-pie #执行yeoman
 如，需要将`index`页面的`1.0`版本打包到时间戳`20130508`:
 
 ```js
-    var DEFAULTS = {
-        timestamp: '20130508',
-        buildPages: [ 'index/1.0']
-    };
+    "defaults": {
+                "timestamp": "20130508",
+                "buildPages": [ "index/1.0" ]
+            }
 ```
 
-之后则可以直接使用 `grunt` 或者 `grunt page`进行打包，使用`grunt watch`进行文件监控。 
+之后则可以直接使用 `grunt` 或者 `grunt page`进行打包，或者使用`grunt common`对common目录进行打包。
+另外还可以使用`grunt watch`进行文件监控。
 
 ## 命令行
 
