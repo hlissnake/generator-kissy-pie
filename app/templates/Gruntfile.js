@@ -151,7 +151,8 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%%= commonBase %>',
                         src: [ '**/*.css', '!**/_*.css' ],
-                        dest: '<%%= commonBase %>'
+                        dest: '<%%= commonBase %>',
+                        ext: '-min.css'
                     }
                 ]
             }
@@ -163,7 +164,7 @@ module.exports = function (grunt) {
          */
         less: {
             options: {
-                paths: ['.', '<%%= pageBase %>']
+                paths: ['.', '<%%= pageBase %>', '<%%= commonBase %>' ]
             },
 
             page: {
@@ -280,9 +281,9 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: ['**/*.css', '!**/*-min.css', '!**/_*.css'],
-                        dest: '<%%= commonBase %>',
-                        ext: '-min.css'
+                        <% if(enableCSSCombo) { %>src: ['**/*-min.css', '!**/_*.css']<% } else { %>src: ['**/*.css', '!**/*-min.css', '!**/_*.css']<% } %>,
+                        dest: '<%%= commonBase %>'<% if(!enableCSSCombo) { %>,
+                        ext: '-min.css'<% } %>
                     }
                 ]
             }

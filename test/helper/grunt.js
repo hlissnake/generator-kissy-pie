@@ -32,4 +32,12 @@ exports.exec = function( path, args, done, ifLog ){
             done && done( null );
         }
     });
+
+    child.stdout.on('data', function (data) {
+        ifLog && console.log( data);
+    });
+
+    child.stderr.on('data', function (data) {
+        ifLog && console.log( data);
+    });
 };

@@ -107,7 +107,6 @@ AppGenerator.prototype.editorConfig = function editorConfig() {
 
 AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
-    this.mkdir('tools');
     this.mkdir('common');
     this.template('abc.json');
     this.template('package-config.js', 'common/package-config.js');
