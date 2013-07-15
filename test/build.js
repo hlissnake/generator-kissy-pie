@@ -11,7 +11,7 @@ var generators = require('yeoman-generator');
 var helpers = require('yeoman-generator').test;
 
 
-describe('ABC - KISSY-PIE generator', function () {
+describe.only('ABC - KISSY-PIE generator build', function () {
 
     it('基本build：page/common[html/js]', function (done) {
 

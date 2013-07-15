@@ -12,9 +12,7 @@ exports.install = function( path, done ){
             done(err)
         }
         else {
-            NPM.commands.install( path,
-            require( Path.resolve( path, 'package.json') ).devDependencies,
-            function( err, data ){
+            NPM.commands.install( path, [], function( err, data ){
                 done( err, data );
             });
         }
