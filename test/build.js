@@ -196,7 +196,7 @@ describe('ABC - KISSY-PIE generator build', function () {
     /**
      * 由于使用了ruby，因此可能不方便测试
      */
-    it.skip('使用SASS：page/common', function (done) {
+    it('使用SASS：page/common', function (done) {
 
         helpers.mockPrompt( KISSYPie, {
             projectName: "my_project",
