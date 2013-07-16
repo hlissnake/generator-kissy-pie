@@ -3,8 +3,6 @@ var util = require('util');
 var path = require('path');
 var Base = require('abc-generator').UIBase;
 
-
-
 module.exports = AppGenerator;
 
 function AppGenerator(args, options, config) {
@@ -49,7 +47,7 @@ AppGenerator.prototype.askFor = function askFor() {
             name: 'projectName',
             message: 'Name of Project?',
             default: abcJSON.name || path.basename(process.cwd()),
-            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+            warning: ''
         },
         {
             name: 'author',
@@ -65,9 +63,9 @@ AppGenerator.prototype.askFor = function askFor() {
         },
         {
             name: 'styleEngine',
-            message: 'Whitch style engin do you use [css-combo|less|sass]?',
+            message: 'Whitch style engin do you use [css|less|sass]?',
             default: abcJSON._kissy_pie.styleEngine,
-            warning: 'Yes: All Twitter Bootstrap files will be placed into the styles directory.'
+            warning: ''
         }
     ];
 
@@ -81,8 +79,7 @@ AppGenerator.prototype.askFor = function askFor() {
         this.styleEngine = props.styleEngine;
         this.enableLess = (/less/i).test(this.styleEngine);
         this.enableSass = (/sass/i).test(this.styleEngine);
-        this.enableCSSCombo = (/css-combo/i).test(this.styleEngine);
-
+        this.enableCSSCombo = (/css/i).test(this.styleEngine);
         cb();
     }.bind(this));
 };
@@ -110,9 +107,7 @@ AppGenerator.prototype.editorConfig = function editorConfig() {
 
 AppGenerator.prototype.app = function app() {
     this.mkdir('utils');
-    this.mkdir('tools');
     this.mkdir('common');
-    this.copy('README.md', 'README.md');
     this.template('abc.json');
     this.template('package-config.js', 'common/package-config.js');
 };
@@ -127,25 +122,40 @@ AppGenerator.prototype.install = function install() {
             return;
         }
         self.log.writeln('\n\nnpm was installed successful. \n\n');
-
     });
 };
 
 AppGenerator.prototype.install = function install() {
     var cb = this.async();
     var self = this;
-    this.npmInstall('', {}, function (err) {
 
-        if (err) {
-            cb(err);
-            return;
-        }
-
-        self.log.writeln('\n\nnpm was installed successful. \n\n');
+    if( this.options[ 'skip-install' ] ){
         cb();
-    });
+    }
+    else {
+        this.npmInstall('', {}, function (err) {
+
+            if (err) {
+                cb(err);
+                return;
+            }
+
+            self.log.writeln('\n\nnpm was installed successful. \n\n');
+            cb();
+        });
+    }
 };
 
+AppGenerator.prototype.installSubTip = function installSub() {
+
+    this.log.writeln('\n****************************************************');
+    this.log.writeln('\n  【下一步】使用 yo kissy-pie:page 命令来创建子页面');
+    this.log.writeln('\n****************************************************\n');
+};
+
+/**
+ * 先取消掉该方法，因为会对单元测试造成影响，导致run方法无法返回
+ *
 AppGenerator.prototype.installSub = function installSub() {
 
     console.log('install sub generator');
@@ -166,6 +176,7 @@ AppGenerator.prototype.installSub = function installSub() {
 
     }.bind(this));
 };
+*/
 
 /**
  * Scan Project

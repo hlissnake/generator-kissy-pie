@@ -1,0 +1,3 @@
+--globals width
+--timeout 100000
+-R spec

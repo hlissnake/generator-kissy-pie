@@ -1,21 +1,25 @@
 {
   "name": "generator-kissy-pie",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "kissy generator for kissypie",
   "main": "app/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -t 0 -R spec"
   },
   "repository": "",
   "keywords": [
     "yeoman-generator"
   ],
-  "author": "maxbbn <qipbbn@gmail.com>",
+  "author": [ "maxbbn <qipbbn@gmail.com>", "neekey <ni184775761@gmail.com>" ] ,
   "license": "BSD",
   "dependencies": {
     "abc-generator": "0.1.1"
   },
   "devDependencies": {
-    "should": "~1.2.2"
+    "yeoman-generator": "~0.12.1",
+    "grunt-cli": "*",
+    "npm": "*",
+    "mocha": "~1.12.0",
+    "fs-extra": "0.6.3"
   }
 }

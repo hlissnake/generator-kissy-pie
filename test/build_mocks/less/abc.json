@@ -1,17 +1,17 @@
 {
-    "name": "<%= projectName %>",
+    "name": "my_project",
     "desc": "description of your app",
     "type": "kissy-pie",
     "type-url": "http://abc.alibaba-inc.com/r/kissy-pie",
     "author": {
-        "name": "<%= author %>",
-        "email": "<%= email %>"
+        "name": "neekey",
+        "email": "ni184775761@gmail.com"
     },
     "_kissy_pie" : {
         "groups": {},
-        "styleEngine": "<%= styleEngine %>",
+        "styleEngine": "less",
         "defaults": {
-            "timestamp": "201279879",
+            "timestamp": "20130712",
             "buildPages": [ "home/1.0" ]
         }
     }

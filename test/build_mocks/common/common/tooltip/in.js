@@ -1,9 +1,9 @@
 /**
- * @fileOverview 
- * @author  
+ * @fileOverview
+ * @author
  */
 KISSY.add(function (S) {
-
+    console.log( 'in.js' );
     /**
      * 下面的方式将自动执行所有require过来的模块的init方法
      *      1、异步执行，各模块不会互相影响
@@ -19,9 +19,10 @@ KISSY.add(function (S) {
             })(module),0);
         }
     });
-    
+
 }, { requires: [
-    /* 可以直接引入utils中的模块
-    'utils/js/mod'
-    */
+    '../mods/_common_mod',
+    '../mods/popup-tpl',
+    'utils/utils_mod',
+    'utils/utils-tpl'
 ]});

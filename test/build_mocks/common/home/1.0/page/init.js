@@ -21,7 +21,8 @@ KISSY.add(function (S) {
     });
     
 }, { requires: [
-    /* 可以直接引入utils中的模块
-    'utils/js/mod'
-    */
+    './mods/page_mod',
+    './mods/overlay-tpl',
+    'utils/utils_mod',
+    'utils/utils-tpl'
 ]});
