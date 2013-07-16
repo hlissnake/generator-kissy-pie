@@ -171,12 +171,9 @@ AppGenerator.prototype.installSub = function installSub() {
  * Scan Project
  */
 AppGenerator.prototype._scan = function _scan() {
-
-    var pages = this.expand('/*/*.*/', {
-        nomount: true,
-        root: '.',
-        mark: true
-    });
+    //normalize for os
+    var matcher = path.join('*', '*.*/');
+    var pages = this.expand(matcher);
 
     pages = pages.map(function(pathname){
         return {
