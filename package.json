@@ -1,16 +1,23 @@
 {
   "name": "generator-kissy-pie",
   "version": "0.2.0",
-  "description": "kissy generator for kissypie",
+  "description": "Yeoman Generator for kissy pie",
   "main": "app/index.js",
   "scripts": {
     "test": "mocha -t 0 -R spec"
   },
-  "repository": "",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "abc-generator"
   ],
   "author": [ "maxbbn <qipbbn@gmail.com>", "neekey <ni184775761@gmail.com>" ] ,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neekey/generator-kissy-pie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/neekey/generator-kissy-pie/issues"
+  },
   "license": "BSD",
   "dependencies": {
     "abc-generator": "0.1.1"
