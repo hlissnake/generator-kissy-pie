@@ -3,13 +3,11 @@
  */
 
 'use strict';
-var NPM = require( './helper/npm' );
 var Grunt = require( './helper/grunt' );
 var fs = require('fs-extra');
 var path = require('path');
 var BuildMock = require( './helper/build_mocks' );
-var generators = require('yeoman-generator');
-var helpers = require('yeoman-generator').test;
+var helpers = require('abc-generator').test;
 
 
 describe('ABC - KISSY-PIE generator build', function () {

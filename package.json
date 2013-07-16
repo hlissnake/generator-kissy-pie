@@ -23,9 +23,6 @@
     "abc-generator": "0.1.1"
   },
   "devDependencies": {
-    "yeoman-generator": "~0.12.1",
-    "grunt-cli": "*",
-    "npm": "*",
     "mocha": "~1.12.0",
     "fs-extra": "0.6.3"
   }

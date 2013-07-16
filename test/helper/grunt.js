@@ -7,7 +7,7 @@ var Path = require( 'path' );
 
 exports.exec = function( path, args, done, ifLog ){
 
-    var child = ChildProcess.execFile( Path.resolve( __dirname, '../../node_modules/grunt-cli/bin/grunt' ), args, {
+    var child = ChildProcess.spawn( 'grunt', args, {
         cwd: path
     });
     var ifOver = false;
@@ -34,10 +34,10 @@ exports.exec = function( path, args, done, ifLog ){
     });
 
     child.stdout.on('data', function (data) {
-        ifLog && console.log( data);
+        ifLog && console.log( data.toString() );
     });
 
     child.stderr.on('data', function (data) {
-        ifLog && console.log( data);
+        ifLog && console.log( data.toString() );
     });
 };
