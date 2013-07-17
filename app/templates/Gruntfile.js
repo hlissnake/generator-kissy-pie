@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= pageBase %>',
-                        src: [ '*.js', '!*.combo.js', '!*-min.js' ],
+                        src: [ '*.js', '!*.combo.js', '!*-min.js', '!*-tpl.js' ],
                         dest: '<%%= pageName%>/<%%=timestamp %>/<%%= packageName %>/'
                     }
                 ]
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%%= commonBase %>',
-                        src: [ '**/*.js', '!**/*.combo.js', '!**/_*.js', '!**/*-min.js' ],
+                        src: [ '**/*.js', '!**/*.combo.js', '!**/_*.js', '!**/*-min.js', '!**/*-tpl.js' ],
                         dest: '<%%= commonBase %>',
                         ext: '-min.js'
                     }
@@ -227,7 +227,6 @@ module.exports = function (grunt) {
          */
         uglify: {
             options: {
-                banner: '/*! <%%= pkg.name %> <%%= grunt.template.today("yyyy-mm-dd") %> */\n',
                 beautify: {
                     ascii_only: true
                 }
@@ -303,7 +302,7 @@ module.exports = function (grunt) {
                 tasks: [ 'kmc:page', 'uglify:page' ]
             },
             common_js: {
-                files: [ '<%%= commonBase %>/**/*.js', './utils/**/*.js' ],
+                files: [ '<%%= commonBase %>/**/*.js', '!<%%= commonBase %>/**/*-min.js', './utils/**/*.js' ],
                 tasks: [ 'kmc:common', 'uglify:common' ]
             }<% if(enableLess) { %>,
             page_less: {
