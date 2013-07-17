@@ -1,6 +1,8 @@
-A yeoman generator for kissy pie
+A yeoman generator for kissy pie 【v0.2】
 
 [![Build Status](https://secure.travis-ci.org/neekey/generator-kissy-pie.png)](http://travis-ci.org/neekey/generator-kissy-pie)
+
+[0.1.x升级0.2.x指南](https://github.com/neekey/generator-kissy-pie/wiki/0.1.x%E5%8D%87%E7%BA%A70.2.x%E6%8C%87%E5%8D%97)
 
 ## install
 
